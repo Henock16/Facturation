@@ -1,0 +1,71 @@
+/* Author Name: arrowthemes  http://themeforest.net/user/arrowthemes  */
+
+body, select, input, textarea, button, a.social .subtitle, .menu-sidebar a, .menu-sidebar li > span { 
+	font-family: "abelregular"; 
+	font-size: 15px; 
+}
+
+#copyright,
+#toolbar ul.menu li span,
+#toolbar time,
+#copyright p, #footer p,
+.tag-line, .footer-overlay-bottom a,
+table.zebra tbody, table.zebra tfoot,
+.menu-sidebar .level2 a > span
+ {font-size: 14px}
+
+  a.social span.subtitle {font-size: 13px}
+
+ .wk-slideshow-home .caption h2{
+ 	font-size: 30px;
+ }
+
+  a.button, #Kunena .kicon-button, 
+ #kunena input.kbutton[type="submit"], 
+ #Kunena .klist-markallcatsread input.kbutton, 
+ .button-more, .button-color, .button-action, 
+ button, input[type="submit"], 
+ input[type="reset"], 
+ input[type="button"], 
+ button[type="submit"], 
+ .button-color, button.button-color, 
+ input.button-color[type="submit"], 
+ input.button-color[type="reset"], 
+ input.button-color[type="button"], 
+ #content .pagination a, #content .pagination strong,
+ #lightbox-title,
+.searchbox input,
+.sprocket-mosaic-filter li, .sprocket-mosaic-order li,
+#Kunena .kicon-button:link, #Kunena .kicon-button, #kunena .kbutton.kreply-submit,
+.sprocket-mosaic-filter li, .sprocket-mosaic-order li
+  {
+ 	font-size: 15px;
+ }
+
+ .button.small, .button-color.small {
+    font-size: 14px;
+  }
+  
+.tag-body, a.tag-body {
+    font-size: 13px !important;
+    line-height: 1.5;
+}
+
+.sprocket-tabs-nav > li > .sprocket-tabs-inner {
+    font-size: 18px;
+}
+
+/*kunena*/
+.klatest-subject a {
+    font-size: 13px;
+}
+
+.klatest-subject a {
+    font-size: 14px;
+}
+
+.klatest-posttime, .klatest-cat, .klatest-author {
+    font-size: 12px;
+}
+
+#showcase .actions .button, #showcase .actions .button-color {font-size: 15px}

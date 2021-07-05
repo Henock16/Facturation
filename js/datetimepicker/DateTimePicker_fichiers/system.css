@@ -1,0 +1,131 @@
+/* Copyright (C) YOOtheme GmbH, http://www.gnu.org/licenses/gpl.html GNU/GPL */
+
+@import url(../warp/css/system.css);
+@import url(../warp/systems/joomla/css/system.css);
+@import url(system-all.css);
+
+
+/* Items (Addition)
+----------------------------------------------------------------------------------------------------*/
+	 
+	#system .items .leading .item {
+		padding-bottom: 12px;
+		margin-bottom: 18px;
+	}
+
+	#system .items > .width33 .title{
+		font-size: 22px;
+	}
+
+
+/* Item List
+----------------------------------------------------------------------------------------------------*/
+
+	#system .item > .links a {
+	margin-right: 9px;
+	}
+
+/* Search
+----------------------------------------------------------------------------------------------------*/
+
+	#system span.highlight { background-color: #ffffaa; }
+
+
+/* Submission form
+----------------------------------------------------------------------------------------------------*/
+	#system form.submission div.submit{text-align: right; margin-right: 26px;}
+	#system form.submission fieldset > div > label:first-child{width: 160px;}
+	#system form.submission fieldset > div > textarea{width: 234px; height: 100px;}
+	#system form.submission fieldset > div {overflow: visible;}
+	#system form.submission.small fieldset > div {
+	margin: 10px 0;
+	}
+
+	#jform_spacer-lbl{display: none;}
+
+	/*filters*/
+	#system .filter > div{
+		margin: 0 10px 10px 0;
+	}
+
+	#system .filter .jqTransformSelectWrapper {
+	 	float: none;
+	    margin-left: 70px;
+	    margin-top: -27px;
+	}
+
+	/*pagination*/
+	#system .pagination {text-align: left; margin-bottom: 20px;}
+	#system .pagination a.previous, #system .pagination a.next,
+	#system .pagination a, #system .pagination strong
+	 {text-align: center; margin-left: 1px;}
+
+	#system .pagination > *:first-child{margin-right: 5px;}
+	#system .pagination a.first{padding: 0 11px;}
+	#system .pagination a.previous, #system .pagination a.next {
+		line-height: 24px;
+	}
+
+	#system .item > .links {text-align: right;}
+
+
+	/*pagination
+	----------------------------------------------------------------------------------------------------*/
+
+	dl.tabs {
+    float: left;
+    margin: 50px 0 0 0;
+    padding: 0 0 0 5px;
+    z-index: 50;
+    clear:both;
+	}
+
+	div.content div.current{
+		background: -moz-linear-gradient(top, #FFFFFF 0%, #F0F1F2 100%);
+		background: -webkit-linear-gradient(top, #FFFFFF 0%, #F0F1F2 100%);
+		background: -o-linear-gradient(top, #FFFFFF 0%, #F0F1F2 100% );
+		padding: 0 20px;
+		-webkit-box-shadow: 0 1px 2px #FFFFFF inset, 0 0 1px rgba(0,0,0,0.1);
+		   -moz-box-shadow: 0 1px 2px #FFFFFF inset, 0 0 1px rgba(0,0,0,0.1);
+		        box-shadow: 0 1px 2px #FFFFFF inset, 0 0 1px rgba(0,0,0,0.1);
+		        border-color: #e0e0e0;
+			    border-style: solid;
+			    border-width: 0 1px 1px;
+			    width: auto; height: auto;
+			    clear: both;
+	   			padding: 10px 10px;
+	}
+
+	dl.tabs dt {
+	    float: left;
+	    padding: 4px 10px;
+	    border-left: 1px solid #DBDBDB;
+	    border-right: 1px solid #DBDBDB;
+	    border-top: 1px solid #DBDBDB;
+	    margin-right: 3px;
+	    background: #f0f0f0;
+	    color: #666;
+	}
+
+	#system dt.tabs h3{
+		margin: 0; padding: 10px;
+		font-size: 20px 
+	}
+
+	dl.tabs dt.open {
+	    background: #FFFFFF;
+	    z-index: 100;
+	    color: #000;
+	    border-left: 1px solid #ECECEC;
+	    border-right: 1px solid #ECECEC;
+	    border-top: 1px solid #ECECEC;
+	}
+
+	div.current dd {
+	    padding: 10px;
+	    margin: 0;
+	}
+
+	dl#content-pane.tabs {
+	    margin: 1px 0 0 0;
+	}
