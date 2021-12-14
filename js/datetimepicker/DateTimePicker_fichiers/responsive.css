@@ -1,0 +1,337 @@
+/* Copyright (C) YOOtheme GmbH, http://www.gnu.org/licenses/gpl.html GNU/GPL */
+
+@import url(../warp/css/responsive.css);
+
+.acymailing_form {float: right;}
+/* Breakpoints
+____________________________________________________________________________________________________*/
+
+
+/* All except large Screens
+____________________________________________________________________________________________________*/
+
+@media (max-width: 1220px) {
+	a.social {font-size: 12px}
+	a.social span.subtitle {font-size: 10px}
+	.sprocket-tabs-nav > li > .sprocket-tabs-inner {font-size: 14px; padding: 13px}
+
+	a.social img {margin: 2px 0 0 10px}
+}
+
+
+/* Only Phones and Tablets (Portrait) 
+____________________________________________________________________________________________________*/
+
+@media (max-width: 959px) {
+	.menu-dropdown a.level1 > span, 
+	.menu-dropdown span.level1 > span{
+		padding: 12px 15px 0 5px
+	}
+
+	article hr.divide {
+		margin: 2em -1.5em;
+	}
+
+	div.acymailing_module{
+		text-align: center;
+		width: 100%;
+	}
+
+	.wk-slideshow-home .caption{
+		height: 54px;
+	}
+
+	a.social {font-size: 14px}
+
+/*columns blocks
+----------------------------------------------------------------------------------------------------*/
+
+	/*events*/
+	.event{display: inline-block;}
+
+	#totop-scroller, #toTop {display: none !important}
+}
+
+
+/* Only Tablets (Portrait) 
+____________________________________________________________________________________________________*/
+
+@media (min-width: 768px) and (max-width: 959px) {
+
+	/*reduce the padding for menus*/
+
+	.menu-dropdown a.level1 > span, 
+	.menu-dropdown span.level1 > span{
+		padding: 4px 10px 0 3px
+	}
+
+	.wk-slideshow-home .caption h2{font-size: 30px}
+	.wk-slideshow-home .caption{
+		height: 265px;
+	}
+
+	.wk-slideshow-home .caption p {
+		width: 330px;
+	}
+
+	.wk-slideshow-home .nav{
+		left: 40%;
+	}
+}
+
+/* Only Tablets (Portrait) and Phones (Landscape) 
+____________________________________________________________________________________________________*/
+
+@media (min-width: 480px) and (max-width: 959px) {
+
+}
+
+/* Only Phones 
+____________________________________________________________________________________________________*/
+
+@media (max-width: 767px) {
+
+	/*base*/
+	h2 {line-height: 33px;}
+
+	/* Layout */
+	#toolbar,
+	#headerbar,
+	#menubar,
+	#breadcrumbs,
+	#header-top,
+	#header-bottom,
+	.mid-divide, 
+	#hmenu
+	 { display: none; }
+
+	.wk-slideshow-home .nav{
+		left: 35%;
+	}
+
+	a.social {font-size: 14px}
+	.wk-slideshow .slides{padding-bottom: 20px}
+	.sprocket-tabs-nav > li > .sprocket-tabs-inner {font-size: 14px; padding: 12px}
+
+	#header-responsive .logo, #header-responsive .searchbox{
+		display: inline
+	}
+	#header-responsive{padding: 5px 15px 20px;}
+	/*widgetkit*/
+	.wk-slideshow-home .caption p, .wk-slideshow-home .caption .button-arrow, 
+	.wk-slideshow .next, .wk-slideshow .prev, #showcase .wk-slideshow-home h2 {display: none !important}
+	
+	#toTop {display: none !important}
+	
+	/*pricing tables*/
+	.price-col{
+		width: 90% !important;
+		padding-right: 0;
+		border: 1px solid #CECECE;
+		-webkit-border-radius: 5px !important;
+		   -moz-border-radius: 5px !important;
+		    -ms-border-radius: 5px !important;
+		     -o-border-radius: 5px !important;
+		        border-radius: 5px !important;
+		 margin-bottom: 5px;
+	}
+
+
+	ul.feature > li {padding: 7px 1px !important}
+	.price-col .price-tag{padding: 15px 5px 10px !important}
+	.call-action {padding: 20px 5px 25px}
+	
+	/*blocks*/
+	[class*="column"] + [class*="column"]:last-child {float: left;}
+	
+	.row .one-fourth, .row .two-fourths {
+		width: 47.5%; 
+		margin-left: 0;
+		margin-right: 2.3%;
+	}	
+
+	.row .two-fourths {
+		width: 100%;
+	}
+
+	.row .one-fifth{
+		width: 100%;
+		left: auto;
+		margin-left: 0;
+	}
+
+	.row .one-sixth{
+		width: 100%;
+		left: auto;
+		margin-left: 0;
+	}
+
+	/*tabs*/
+	.hidden-img{
+		height: 60%;
+		right: -25px;
+	}	
+
+	/*reveal*/
+	.reveal-modal-bg { 
+		position: fixed; 
+		height: 100%; 
+		width: 100%; 
+		background: #000; 
+		z-index: 40; 
+		display: none; 
+		top: 0; 
+		left: 0; 
+	}
+
+	.reveal-modal {
+		visibility: hidden; 
+		top: 100px; 
+		left: 0; 
+		margin: 10px; 
+		width: auto; 
+		background: #eee url(../images/typo/modal-gloss.png) no-repeat -200px -80px; 
+		position: absolute; 
+		z-index: 41; 
+		padding: 30px 40px 34px; 
+		-webkit-border-radius: 5px;
+		-moz-border-radius: 5px;
+		-ms-border-radius: 5px;
+		-o-border-radius: 5px;
+		border-radius: 5px;
+		-webkit-box-shadow: 0 0 10px rgba(0,0,0,.4); 
+		-moz-box-shadow: 0 0 10px rgba(0,0,0,.4);
+		box-shadow: 0 0 10px rgba(0,0,0,.4);
+	}
+
+	.reveal-modal .close-reveal-modal {font-size: 22px;	line-height: .5; position: absolute;top: 8px; 	right: 11px; color: #aaa; text-shadow: 0 -1px 1px rbga(0,0,0,.6);	font-weight: bold;} 
+	.reveal-modal .row {min-width: 0;}
+
+
+	.reveal-modal input[type="text"],
+	.reveal-modal input[type="password"],
+	.reveal-modal input[type="email"],
+	.reveal-modal select{	
+		width: 100%;
+		-webkit-transition: background-color .15s ease-in-out;
+		-moz-transition: background-color .15s ease-in-out;
+		-ms-transition: background-color .15s ease-in-out;
+		-o-transition: background-color .15s ease-in-out;
+		transition: background-color .15s ease-in-out;
+	}
+
+	/*registration*/
+	#system form.submission fieldset > div > input[type="text"], 
+	#system form.submission fieldset > div > input[type="password"],
+	input[type="text"],
+	legend, fieldset
+	{width: 95%;}
+
+	#system form.submission fieldset > div > textarea,
+	textarea
+	{width: 88% ;}
+
+	input[type="text"]#jform_profile_dob{ width: 82% !important;}
+
+	/*newsletter*/
+	.acymailing_introtext {
+		text-align: center; 
+		padding-bottom: 20px;
+		white-space: normal;
+		left: 0;
+	}
+
+	#newsletter p{margin-left: -38px}
+	#newsletter .acymailing_form p{float: none; top: 24px;}
+	#newsletter .acymailing_form p.acysubbuttons{top: -2px; }
+	div.acymailing_module, .acymailing_module div
+	{
+		display: inline-block;
+		width: 100%;
+		text-align: center
+	}
+
+	.acyfield_email input[type="text"]{
+		width: 55%;
+	}
+
+	.gkTabsWrap {overflow: hidden}
+	.gkTabsContainer{border-width: 0 0 1px 1px !important}
+	/*toggles*/
+	.showhide li h4 {font-size: 18px; padding: 8px 45px 5px;}
+
+}
+
+/* Only Phones (Landscape) 
+____________________________________________________________________________________________________*/
+
+@media (min-width: 480px) and (max-width: 767px) {
+	.width35{
+		width: 50%;
+	}	
+
+	.gkTabsContainer{
+		padding: 0 10px;
+	}
+
+}
+
+/* Only Phones (Portrait) 
+____________________________________________________________________________________________________*/
+
+@media (max-width: 479px) {
+
+	/*sections*/
+	.width35{
+		width: 100%;
+	}	
+
+	/*blocks*/
+	.row .column, .row .columns{
+		width: 100%; 
+		margin-left: 0
+	}
+
+	.wk-slideshow-home .nav{
+		left: 25%;
+	}
+
+	/*logo*/
+	.module-title{font-size: 20px}
+	/* System */
+	#system .items .item,
+	#system .items .item:first-child {
+		margin-top: 12px;
+		padding-top: 18px;
+		border-top-width: 1px;
+	}
+
+	#system .items :first-child .item {
+		margin-top: 0;
+		padding-top: 0;
+		border-width: 0;
+	}
+
+	#system .items .leading .item {
+		margin-bottom: 0;
+		padding-bottom: 0;
+		border-width: 0;
+	}
+	
+	/*tabs*/
+	#main .sprocket-mosaic .sprocket-mosaic-filter ul li, #main .sprocket-mosaic .sprocket-mosaic-filter ul li, .sprocket-mosaic .sprocket-mosaic-filter li, .sprocket-mosaic .sprocket-mosaic-filter li, .gkTabsWrap.vertical ol li, #main .sprocket-mosaic .sprocket-mosaic-order ul li, #main .sprocket-mosaic .sprocket-mosaic-order ul li, .sprocket-mosaic .sprocket-mosaic-order li, .sprocket-mosaic .sprocket-mosaic-order li{margin-bottom: 5px !important;}
+	.gkTabsGK5 {margin-top: 0;}
+	.gkTabsContainer{
+		padding: 0 10px;
+	}	
+
+	/*widgetkit*/
+	video,
+	.mejs-poster.mejs-layer img
+	{max-width: 100% !important; }	
+
+	.mejs-container.mejs-audio, 
+	.mejs-container.mejs-audio > div
+	{max-width: 100% !important; }
+
+}

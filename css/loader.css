@@ -1,0 +1,41 @@
+
+#loader {
+	display: block;
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	z-index: 1501;
+	margin: -25px 0 0 -25px;
+	border-radius: 50%;
+	border-top: 10px dotted #AAAAAA;
+	border-right: 10px dotted #888888;
+	border-bottom: 10px dotted #444444;
+	border-left: 10px dotted #000000;
+	width: 50px;
+	height: 50px;
+	-webkit-animation: spin 1s linear infinite;
+	animation: spin 1s linear infinite;
+}
+#bgpage {
+	display: block;
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 1500;
+	width: 100%;
+	height: 100%;
+	background:rgba(0,0,0,.1);
+}
+
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+
