@@ -14,9 +14,17 @@ $chrg=(isset($_GET['chrg'])?$_GET['chrg']:'');
 $debut=(isset($_GET['debut'])?$_GET['debut']:'');
 $fin=(isset($_GET['fin'])?$_GET['fin']:'');
 $cafe=(isset($_GET['cafe'])?$_GET['cafe']:'');
-$cajou=(isset($_GET['cajou'])?$_GET['cajou']:'');
+// $cajou=(isset($_GET['cajou'])?$_GET['cajou']:'');
 $autres=(isset($_GET['autres'])?$_GET['autres']:'');
-$user='compta';
+
+if($cafe==0 && $autres==1)
+	$type='2';
+else if($cafe==1 && $autres==0)
+	$type='1';
+else if($cafe==1 && $autres==1)
+	$type='1,2';
+
+// $user='compta';
 
 
 $debut=datesitetoserver($debut);
@@ -30,7 +38,7 @@ $file=PDFfile('FILE',$repfact,$annee,$mois,$pont,$chrg,$cafe,$cajou,$autres);
 if(file_exists($path.$file))
 	header ("Location: ".$path.$file);
 else
-	PDF_Tickets($pont,$chrg,$debut,$fin,$cafe,$cajou,$autres,$mpdf,'I',$user);
+	PDF_Tickets($pont,$chrg,$debut,$fin,$cafe,/*$cajou*/'',$autres,$mpdf,'I',$user);
 //*/
 /*
 if(!file_exists($path.$file))

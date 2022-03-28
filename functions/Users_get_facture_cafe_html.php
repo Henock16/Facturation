@@ -1,12 +1,13 @@
 <?php
 include_once('Date_function.php');
+include_once('../functions/Get_SQLPonts_function.php');//ajouter pour test
 include_once('../functions/Get_reqUser_function.php');
 include_once('Chiffre_en_lettre_function.php');
 include_once('../functions/Table_value_function.php');
 include_once('../functions/Complete_function.php');
 
-function getFactureHtml($pont,$debut,$fin,$type,$user){
-  // function getFactureHtml($user,$debut,$fin,$type){
+//function getFactureHtml($pont,$debut,$fin,$type,$user){
+   function getFactureHtml($user,$debut,$fin,$type,$pont){
 
     
     global $mpdf,$cumul,$tarif,$bds,$bdf,$numcc,$regime,$impot,$bank,$compte,$tva,$signature;
@@ -16,30 +17,35 @@ function getFactureHtml($pont,$debut,$fin,$type,$user){
     $annee=substr($debut,0,4);
     $mois=substr($debut,5,2);
 
-//		$res = GetSQLPonts($debut,$fin,$pont,$cafe,$cajou,$autres);
-  $res =  GetReqUser($debut,$fin,$user,$pont,$type);
+   $res = GetSQLPonts($debut,$fin,$user,$pont,$type);
+   //$res =  GetReqUser($debut,$fin,$user,$pont,$type);
 
 
-    $bdd = $res[0];
-    $query = $res[1];
+     $bdd = $res[0];
+     $query = $res[1];
 
-    $result = $bdd -> query ($query);
+      $result = $bdd -> query ($query);
              
     $donnees=$result->fetch();
-      
-    $account=getvalue($bdf,'ID_USER,IMPAYES','FACTURE','ID_PONT',$pont);
-    $user=($account[0]?getvalue($bdf,'STRUCTURE,BP,TELEPHONE,NUM_CC,ACOMPTE','USER','IDENTIFIANT',$account[0]):getvalue($bds,'STRUCTURE','PONT','ID_PONT',$pont));
+     // var_dump($res[0]);
+   //  $account=getvalue($bdf,'ID_USER,IMPAYES','FACTURE','ID_PONT',$pont);
+
+   $account=getvalue($bdf,'ID_USER,IMPAYES','PONT','ID_USER',$user/*$bdf,'ID_USER,IMPAYES','PONT','ID_PONT',$pont*/);
+    $user=($account[0]?getvalue($bdf,'STRUCTURE,BP,TELEPHONE,NUM_CC,ACOMPTE','USER','IDENTIFIANT',$account[0]):getvalue($bds,'STRUCTURE','PONT','STRC',$account[0]));
     $bp=($account[0]?($user[1]?$user[1]:'&nbsp;'):'&nbsp;');
     $tel=($account[0]?($user[2]?$user[2]:'&nbsp;'):'&nbsp;');
     $ncc=($account[0]?($user[3]?$user[3]:'&nbsp;'):'&nbsp;');
     $acompte=($account[0]?($user[4]?$user[4]:'0'):'0');
 
+   
     $nbtc= $donnees['NBTC'];
     $montant=$donnees['MONTANT'];
- 
+   // var_dump($account[0]);
     $impayes=$account[1];
-
+    //var_dump('Users_get_facture_cafe_html.php line 43'.''.$account[0].'le pont'.$donnees['NBTC']);
     setlocale(LC_TIME, 'fr_FR',"French");
+   //  var_dump('line 47'.''.'nombre de ticket'. $nbtc.''.'montant'.$montant.'variable:'.$pont);
+    
  
     $date=strftime("%B", strtotime($debut));
     $anne=substr($debut,0,4);
@@ -206,9 +212,9 @@ $html.='		<table style="border-collapse: collapse;"  width="100%">
 				   </tbody>
 				</table>';
 
-///////////////////MISE A JOUR DES IMPAYES//////////////////////////
+///////////////////MISE A JOUR DES IMPAYES//////////////////////////WHERE ID_PONT='".$pont."' AND
 if($cumul)
-	$bdf->exec("UPDATE PONT SET IMPAYES='".$total."' WHERE ID_PONT='".$pont."' AND ID_USER='".$account[0]."'");
+	$bdf->exec("UPDATE PONT SET IMPAYES='".$total."' WHERE ID_USER='".$account[0]."'");
 
 /////////////MISE A JOUR DE L'ACCOMPTE/////////////////
 if($acompte && $account[0]){
@@ -253,6 +259,6 @@ $html.='<br><br><br><br>';
 }
 /**/
 ///////////////////////////////////////////////////////DEUXIEME PAGES ///////////////////////////////////////////////
-
+   //  echo $html.$pont.'nombre de ticket'.$nbtc;
     return $html;
 }

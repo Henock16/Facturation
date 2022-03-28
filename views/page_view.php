@@ -10,12 +10,22 @@
 						<!-- <h4 class="card-title col-sm-3 ">Facturation des affectations</h4> -->
 								
 						  
-						<select class="form-control col-sm-1" name="annee" style="float:left;height:30px;padding-left:5px;padding-right:5px;margin-left:5px;" required>
+						<!-- <select class="form-control col-sm-1" name="annee" style="float:left;height:30px;padding-left:5px;padding-right:5px;margin-left:5px;" required>
 							<option value="">ANNEE</option>
-						</select>
+						</select> -->
+
+                  <div class="col-sm-2">
+                      <input class="form-control datepicker" name="dateD" placeholder="Date de début" style="float:left;height:30px;padding-left:5px;padding-right:5px;margin-left:5px;" required>
+                  </div>
+                  <div class="col-sm-2">
+                      <input class="form-control datepicker" name="dateF" placeholder="Date de fin" style="float:left;height:30px;padding-left:5px;padding-right:5px;margin-left:5px;" required>
+                  </div>
 						
-						<select class="form-control col-sm-1" name="mois" style="float:left;height:30px;padding-left:5px;padding-right:5px;margin-left:5px;" required>
+						<!-- <select class="form-control col-sm-1" name="mois" style="float:left;height:30px;padding-left:5px;padding-right:5px;margin-left:5px;" required>
 							<option value="">MOIS</option>
+						</select> -->
+            <select class="form-control col-sm-1" name="strc" style="float:left;height:30px;padding-left:5px;padding-right:5px;margin-left:5px;">
+							<option value="">PROPRIETAIRE</option>
 						</select>
 
 						<input type="hidden" name="pont" value="">
@@ -42,6 +52,9 @@
                         <tr>
                         <th>IDENTIFIANT</th>
                         <th>STRUCTURE</th>
+                        <th>MOIS</th>
+                        <th>ANNEE</th>
+                        <th>PRODUIT</th>
                         <th>PONT</th>
                         <th>CHARCHEURS</th>
                         <th>TICKETS</th>
@@ -53,6 +66,9 @@
                       </thead>
                       <tbody>
                         <tr>
+                          <td></td>
+                          <td></td>
+                          <td></td>
                           <td></td>
                           <td></td>
                           <td></td>

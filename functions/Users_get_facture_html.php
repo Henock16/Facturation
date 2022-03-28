@@ -18,7 +18,7 @@ include_once('../functions/Complete_function.php');
 		$mois=substr($debut,5,2);
 
 //		$res = GetSQLPonts($debut,$fin,$pont,$cafe,$cajou,$autres);
-      $res = GetSQLPonts($debut,$fin,$pont,$type);
+      $res = GetSQLPonts($debut,$fin,$user,$pont,$type);
 
 
 		$bdd = $res[0];

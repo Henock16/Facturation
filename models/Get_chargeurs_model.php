@@ -16,18 +16,20 @@
 
 	
 	//liste des chargeur
-	function GetChargeur ($bdd,$debut,$fin,$pont,$cafe,/*$cajou*/$autres){
+	function GetChargeur ($bdd,$debut,$fin,$pont,$user,$cafe,/*$cajou*/$autres){
 
-		global $tarif;
+		global $tarif,$type;
 		
 		$debut =  datesitetoserver($debut);
 		$fin =  datesitetoserver($fin);
 		$pont =((empty($pont))? $_SESSION["ID_PONT"] : $pont);
-
+		//$user  =((empty($user))? $_SESSION["ID_USER"] : $user);
+// var_dump($debut.'-'.$fin);
 		// echo $_SESSION['ID_PONT'];
 		 
 
-		$critere=Produit($cafe,/*$cajou*/$autres);
+		// $critere=Produit($cafe,/*$cajou*/$autres);
+			$critere=Produit($type);
 		
 		$query = " SELECT  T.N_CONTENEUR_1 ,  CO.ORIGINAL ";
 		// $query = " SELECT COUNT(DISTINCT T.N_CONTENEUR_1) AS NBTC, COUNT(DISTINCT T.N_CONTENEUR_1)*".$tarif." AS COUT,CO.ORIGINAL ";
@@ -36,19 +38,25 @@
 		$query .= " WHERE T.DISABLED = 0 AND T.ARCHIVE= 0 AND T.BANNED= 0 AND T.BLOCKED= 0 ";
 		$query .= " AND T.COMPAGNIE_MARITIME NOT IN('CCI') AND T.CHARGEUR = CO.DERIVE AND T.COMP_MAR_TRY>0 AND T.COMP_MAR_GONE>=1 ";
 		// $query .= ((!empty($cafe)&&!empty($cajou)&&!empty($autres))?" ":" AND T.PRODUIT = CP.DERIVE AND CP.ORIGINAL ".$critere);	
-		$query .= ((!empty($cafe)/*&&!empty($cajou)*/&&!empty($autres))?" ":" AND T.PRODUIT IN(SELECT DERIVE FROM CORRESPROD WHERE ORIGINAL ".$critere.")");	
+		// $query .= ((!empty($cafe)/*&&!empty($cajou)*/&&!empty($autres))?" ":" AND T.PRODUIT IN(SELECT DERIVE FROM CORRESPROD WHERE ORIGINAL ".$critere.")");	
+		// $query .=(!empty($debut)?" AND T.DATE_EMIS>='".$debut."' ":"");
+		// $query .=(!empty($fin)?" AND T.DATE_EMIS<='".$fin."' ":"");
+		// $query .=(!empty($pont)?" AND T.PONT='".$pont."' ":"");
+		$query .= (!empty($type)?" ":" AND T.PRODUIT IN(SELECT DERIVE FROM CORRESPROD WHERE ORIGINAL ".$critere.")");	
 		$query .=(!empty($debut)?" AND T.DATE_EMIS>='".$debut."' ":"");
 		$query .=(!empty($fin)?" AND T.DATE_EMIS<='".$fin."' ":"");
-		$query .=(!empty($pont)?" AND T.PONT='".$pont."' ":"");
+		$query .=(!empty($pont)?" AND T.PONT='".$pont."'":"");
+		// $query.="AND T.PONT='".$pont. 
 		$query .=" ORDER BY T.N_CONTENEUR_1,T.DATE_RECEPT DESC,T.HEURE_RECEPT DESC";
 		// $query .=" GROUP BY CO.ORIGINAL";
-
+		
 
 		// echo $query;
 		$result = $bdd -> query ($query);
 
 		$nbtc=0;
 		$cnt="";
+		// $reponse=array();
 		$tabchar=array();
 		$tabtick=array();
 		 while ($donnees = $result->fetch()){
@@ -78,39 +86,45 @@
 	
 		$tab[$i]=4;
 		$i++;
-
 		$j=0;
+
 
 		while ($j< count($tabtick)){
 			
 			
 			$tab[$i] = $tabchar[$j];
-			$i++;
+				$i++;
 		
-			$chargeur=GetNomChargeur($bdd,$tabchar[$j]);
-			
-			$tab[$i]=($chargeur?$chargeur:'CHARGEUR(S) NON IDENTIFIE(S)');
-			$i++;
+		 		$chargeur=GetNomChargeur($bdd,$tabchar[$j]);
+				
+				$tab[$i]=($chargeur?$chargeur:'CHARGEUR(S) NON IDENTIFIE(S)');
+				$i++;
 
-			$tab[$i]=$tabtick[$j];
-			$i++;
+				$tab[$i]=$tabtick[$j];
+				$i++;
 
-			$tab[$i]=number_format(($tabtick[$j]*$tarif),0,""," ")." F";
-			$i++;
+				$tab[$i]=number_format(($tabtick[$j]*$tarif),0,""," ")." F";
+				$i++;
 
 			
 			$j++;
-	
+			// var_dump($i.''.$j,json_encode($i.''.$j));
+			//   json_encode($i.''.$j);
+			// var_dump(json_encode($i.''.$j));
+		// echo json_encode($i.''.$j);
+		// echo json_decode($i.''.$j);
 		}
-		// $result->closeCursor();	
-	
-		return $tab;
-	}
-
-	$tab=GetChargeur($bds,$_POST['debut'],$_POST['fin'],$_POST['pont'],$_POST['cafe'],'',$_POST['autres']);
+		
+	 	$result->closeCursor();	
+		
+	 	return $tab;
+		//  $reponse =array($tab,$i,$j);
+	 }	
+$tab=GetChargeur($bds,$_POST['debut'],$_POST['fin'],$_POST['pont'],$_POST['user_id'],$_POST['cafe'],$_POST['autres']);
 
      
     header('Content-type: application/json');
-   echo json_encode($tab);
+ echo json_encode($tab);
+// var_dump(json_encode($tab));
 
 ?>

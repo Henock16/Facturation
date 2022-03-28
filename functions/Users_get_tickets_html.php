@@ -89,15 +89,22 @@ $center=';margin: auto;';
 				</tr>';
 				  
 
-             
-               
+            
+				
              
             $i=0;
             $cnt="";
-            while ($donnees = $result->fetch()){
-
+			$donnees=$result->fetch();
+			// if($donnees == $result){
+             while ($donnees = $result->fetch()){
+				 
+				//  echo'la variable'. $cnt;
+				//  var_dump($donnees);
+				// var_dump('je suis dans la boucle');
+				// echo 'je suis dans la boucle';
                 if($cnt!=$donnees["N_CONTENEUR_1"]){
-				   
+					// var_dump('je suis dans la boucle');
+					
 					$cnt=$donnees["N_CONTENEUR_1"];
 					
 					if($donnees['ORIGINAL'] == $chrg ){
@@ -123,9 +130,11 @@ $center=';margin: auto;';
 					}
 
 					$date=strtoupper(strftime("%B", strtotime($donnees['DATE_RECEPT'])));
-				}
+				 }
 
             }
+			//  var_dump($result);
+			//  var_dump($cnt);
 
              //pour le nombre et le cout des tickets
              $cout= $i*$tarif;
@@ -181,7 +190,7 @@ setlocale(LC_ALL, 'fr_FR', 'fra_FRA');
 
          </table> <br>';
 
-
-    return $entete.$html1;
+			//  echo $entete.$html1;
+    // return $entete.$html1;
 }
 ?>

@@ -9,12 +9,10 @@ include('../functions/PDF_File_function.php');
 
 //function PDF_Facture($pont,$debut,$fin,$cafe,$cajou,$autres,$mpdf,$mode,$user){
 function PDF_Facture($pont,$debut,$fin,$type,$mpdf,$mode,$user){
-
-	 
 	// $facture =  getFactureHtml($pont,$debut,$fin,$cafe,$cajou,$autres);
-	$facture =  getFactureHtml($pont,$debut,$fin,$type);
-	// $chargeurs = getChargeursHtml($pont,$debut,$fin,$cafe,$cajou,$autres);
-	$chargeurs = getChargeursHtml($pont,$debut,$fin,$type);
+	$facture =  getFactureHtml($user,$debut,$fin,$type,$pont);
+	//$chargeurs = getChargeursHtml($pont,$debut,$fin,$cafe,$cajou,$autres);
+	 $chargeurs = getChargeursHtml($pont,$debut,$fin,$type,$user);
 	$space= ' ';
 	$title = "FACTURE";
 
@@ -48,6 +46,8 @@ function PDF_Facture($pont,$debut,$fin,$type,$mpdf,$mode,$user){
 
 		$pdf = new mPDF();
 		//$pdf2 = new mPDF("A4-L");
+		ini_set("pcre.backtrack_limit", "1000000");
+		// $facture=preg_replace($facture);
 
 		$pdf->SetDisplayMode('fullpage');
 		//$pdf->SetHeader(' | ' . $title . ' |{PAGENO}');

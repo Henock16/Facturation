@@ -43,7 +43,7 @@ function GetMois($year){
 	return $tab;
 	}
 	
-    $tab=GetMois($_POST['critere']);
+$tab=GetMois($_POST['critere']);
 
     /* Output header */
     header('Content-type: application/json');

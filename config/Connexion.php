@@ -17,7 +17,7 @@ $bds = new PDO('mysql:host='.$host.';dbname='.$basesolas.';charset=utf8',$user ,
 
 $uploadrep="uploads/";
 $lang=1; //1=FR/2=EN
-$mpdf=7; //6=mpdf version 6 pour apache 5 /7=mpdf version 7 pour apache 7 avec autoloader
+$mpdf=6; //6=mpdf version 6 pour apache 5 /7=mpdf version 7 pour apache 7 avec autoloader
 $repfact="factures";
 ///////////////////////////////////////////////////////////////////////
 $deconnect=15*60;//(minute*60=second)
