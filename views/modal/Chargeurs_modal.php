@@ -14,11 +14,15 @@
 							<th>NOM</th>
 							<th>TICKETS</th>
 							<th>COUT</th>
+							<th>ID PONT</th>
+							<th>NOM PONT</th>
 							<th>DETAILS</th>
 							</tr>
 						  </thead>
 						  <tbody>
 							<tr>
+							  <td></td>
+							  <td></td>
 							  <td></td>
 							  <td></td>
 							  <td></td>

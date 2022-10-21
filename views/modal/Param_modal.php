@@ -9,8 +9,10 @@
 				<div class="modal-body" style=" overflow-y:auto;">
                     <div class="row" id="param-form" style="vertical-align: center">
                         
-                        
+					
                     </div>
+					<label class="col-sm-5" style="padding-top:0px;height:30px;">Exclusion de pesée d’un chargeur</label>
+					<button type="button" id="exclu" style="height:35px;" class="btn btn-danger pull-right">Exclure</button>
                 </div>
 				<div class="modal-footer"  style=" ">
 					<button type="button" data-dismiss="modal"class="btn btn-danger pull-center ">Fermer</button>

@@ -1,5 +1,12 @@
 <?php
-
+/*
+    Date creation : 16-05-2022
+    Auteur : Cellule SOLAS - KENT
+    Version:1.0
+    Dernière modification : 04-10-2022
+    Dernier modificateur : Cellule SOLAS - KENT
+    Description: Fonction qui ramene le nom du chargeur à partir du ID 
+*/
     include_once('Date_function.php');
 
     function GetNomChargeur ($bdd,$idchar){
@@ -15,6 +22,5 @@
 
 		return $nom;
 	}
-	// $tab=GetChargeur($bdd,$_POST['idchar']);
 
 ?>

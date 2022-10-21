@@ -30923,7 +30923,7 @@ function purify_utf8($html,$lo=true) {
 				$err .= '[[#'.ord(substr($html,$pos,1)).']]';
 				$pos++;
 			}
-			echo '<span style="color:red; font-weight:bold">'.$err.'</span>';
+			echo '<span style="color:red; font-weight:bold">'.$err.'</span>'; 
 			$html = substr($html, $pos);
 		}
 		echo $html;

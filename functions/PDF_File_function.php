@@ -1,8 +1,7 @@
 <?php
 include_once('../functions/Complete_function.php');
 
-//function PDFfile($type,$repfact,$annee,$mois,$pont,$chrg,$cafe,$cajou,$autres){
-function PDFfile($type,$repfact,$annee,$mois,$pont,$chrg,$typ){
+function PDFfile($type,$repfact,$annee,$mois,$user,$char,$typ){
 
 
 		$res="";
@@ -10,17 +9,23 @@ function PDFfile($type,$repfact,$annee,$mois,$pont,$chrg,$typ){
 		$prod=$typ;
 		
 		if($type=='PATH')
-			$res="../".$repfact."/".$annee."/".$mois."/".Complete($pont,3)."/".$prod."/";
-		elseif($type=='FILE')
-			if($chrg==='')
-				$res.="FACTURE_".$annee.$mois.Complete($pont,3).$prod.".PDF";
+			if($char=='')
+				$res="../".$repfact."/".$annee."/".$mois."/".Complete($user,3)."/".$prod."/";
 			else
-				$res.="DETAILS_".$annee.$mois.Complete($pont,3).$prod.Complete($chrg,4).".PDF";
+				$res="../".$repfact."/".$annee."/".$mois."/".Complete($char,4)."/".$prod."/";
+
+		elseif($type=='FILE')
+			if($char=='')
+				
+				$res.="FACTURE_".$annee.$mois.$prod.Complete($user,3).".PDF";
+			else
+				
+				$res.="FACTURE_CHAR_".$annee.$mois.$prod.Complete($char,4).".PDF";
 		
 		return $res;
 	}
 	/////////////////////////////CSV//////////////////////////////
-	function CSVfile($type,$repfact,$annee,$mois,$pont,$chrg,$typ){
+	function CSVfile($type,$repfact,$annee,$mois,$pont,$char,$typ){
 
 
 		$res="";
@@ -30,11 +35,10 @@ function PDFfile($type,$repfact,$annee,$mois,$pont,$chrg,$typ){
 		if($type=='PATH')
 			$res="../".$repfact."/".$annee."/".$mois."/".Complete($pont,3)."/".$prod."/";
 		elseif($type=='FILE')
-			if($chrg==='')
-				// $res.="FACTURE_".$annee.$mois.Complete($pont,3).$prod.".PDF";
+			if($char==='')
 				$res="";
 			else
-				$res.="DETAILS_".$annee.$mois.Complete($pont,3).$prod.Complete($chrg,4).".CSV";
+				$res.="DETAILS_".$annee.$mois.Complete($pont,3).$prod.Complete($char,4).".CSV";
 		
 		return $res;
 	}

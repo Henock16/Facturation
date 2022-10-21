@@ -33,6 +33,9 @@
             $fin=(isset($_GET['fin'])?datesitetoserver($_GET['fin']):'');
             $cafe=(isset($_GET['cafe'])?$_GET['cafe']:'');
             $autres=(isset($_GET['autres'])?$_GET['autres']:'');
+            $strc=(isset($_GET['user_id'])?$_GET['user_id']:'');
+            $mois=$_GET['mois'];
+            $annee=$_GET['annee'];
             // $c=0;
             if($cafe==0 && $autres==1)
                 $type='2';
@@ -42,27 +45,29 @@
             //     $type='1,2';
 
 
-                $query = $bds -> prepare(requestExtraction($pont,$chrg,$debut,$fin,$type));
+                $query = $bds -> prepare(requestExtraction($pont,$chrg,$debut,$fin,$type,$mois,$annee));
 
                 $query -> execute();
                 $rows = $query -> rowCount();
-
-                $annee=substr($debut,0,4);
-		        $mois=substr($debut,5,2);
+                $moiss = array('Janvier','Fevrier', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Decembre');
+          //       $annee=substr($debut,0,4);
+		        // $mois=substr($debut,5,2);
 
                 $ln="\n";
                 $i=0;
                 $cnt="";
 
                 if($i==0){
-                    $account=getvalue($bdf,'ID_USER','PONT','ID_PONT',$pont);
-		            $user=($account[0]?getvalue($bdf,'STRUCTURE','USER','IDENTIFIANT',$account[0]):getvalue($bds,'STRUCTURE','PONT','ID_PONT',$pont));
+                    $user=(($strc==$chrg)?getvalue($bds,'DERIVE','CORRESPONDANCE','ORIGINAL',$chrg):getvalue($bdf,'STRUCTURE','USER','IDENTIFIANT',$strc));
+
+		            $numfac=(($strc==$chrg)?getvalue($bdf,'NUM_FACTURE','FACTURE','ID_CHAR',$chrg):getvalue($bdf,'NUM_FACTURE','FACTURE','ID_USER',$strc));
+
 
                     $titre=addchmp("Pour Le Client :");
                     $titre.=addchmp($user[0]);
                     $titre.=addchmp("Pour La Facture :");
-                    $titre.=addchmp("SOL".$annee.$mois.Complete($pont,3).$type);
-                    $titre.=addchmp("du :".strftime('%d %B %Y'));
+                    $titre.=addchmp($numfac[0]);
+                    $titre.=addchmp("du : 01".' '.strtoupper($moiss[$mois-1]).' '. $annee);
                     $titre.=$ln;
                     $titre.=$ln;
                     $entete=addchmp("DATE DE PESEE");
@@ -90,29 +95,13 @@
 							$entete.=addchmp($data['COMPAGNIE_MARITIME']);
 							$entete.=addchmp($data['TRANSITAIRE']);
 							$entete.=addchmp($produit[0]);
-							$entete.=addchmp(number_format($data['POIDS_VGM'],0,""," "));
+							$entete.=addchmp(/*number_format(*/$data['POIDS_VGM'],0,""," ")/*)*/;
 							$entete.=addchmp($data['chp57']);
                             $entete.=$ln;
 
                             $i++;
                         }
                         $date=strtoupper(strftime("%B", strtotime($donnees['DATE_RECEPT'])));
-                        // $data['DATE_RECEPT'];
-                        // $data['ORIGINAL'];
-                        // $data['HEURE_RECEPT'];
-                        // $data['CHARGEUR'];
-                        // $data['N_DOSSIER_BOOKING'];
-                        // $data['N_CONTENEUR_1'];
-                        // $data['N_PLOMB_1'];
-                        // $data['TRANSITAIRE'];
-                        // $data['COMPAGNIE_MARITIME'];
-                        // $data['CHARGEUR'];
-                        // $data['METHODE_DE_PESEE_VGM'];
-                        // $data['POIDS_VGM'];
-                        // $data['PRODUIT'];
-                        // $data['N_CONTRAT'];
-                        // $data['chp57'];
-                        // $data['DATE_EMIS'];
                     }
                     $cout= $i*$tarif;
                     $entete.=addchmp("TOTAL");
@@ -126,29 +115,16 @@
                     $entete.=addchmp(number_format($cout,0,"",".")." F");
                     $query -> closeCursor();
                 }
-                // echo $csv=fputcsv($pont,$chrg,$debut,$fin,$type);
-                
-            //    $cvs= requestExtraction($pont,$chrg,$debut,$fin,$type);
-            //    $csv=getChargeursHtml($pont,$debut,$fin,$type,$user);
-            $account=getvalue($bdf,'ID_USER','PONT','ID_PONT',$pont);
-		    $user=($account[0]?getvalue($bdf,'STRUCTURE','USER','IDENTIFIANT',$account[0]):getvalue($bds,'STRUCTURE','PONT','ID_PONT',$pont));
+              
+      //       $account=getvalue($bdf,'ID_USER','PONT','ID_PONT',$pont);
+		    // $user=($account[0]?getvalue($bdf,'STRUCTURE','USER','IDENTIFIANT',$account[0]):getvalue($bds,'STRUCTURE','PONT','ID_PONT',$pont));
 
             $bds = null;
 
             $ligne=$titre.$entete;
-            // $debut=datesitetoserver($debut);
-            // $fin=datesitetoserver($fin);
-            // $annee=substr($debut,0,4);
-            // $mois=substr($debut,5,2);
-            // $path=CSVfile('PATH',$repfact,$annee,$mois,$pont,$chrg,$cafe,$autres);
-            // $file=CSVfile('FILE',$repfact,$annee,$mois,$pont,$chrg,$cafe,$cajou,$autres);
             $fichier=nomdefichier($user[0]);
             $path = "../".$uploadrep."/".$fichier.".csv";
             
-
-            // while($rs = $rows->fetch(PDO::FETCH_ASSOC)){
-            //     $tab[] = [$rs['DATE_RECEPT'], $rs['ORIGINAL'], $rs['HEURE_RECEPT'],$rs['CHARGEUR'], $rs['N_DOSSIER_BOOKING'], $rs['N_CONTENEUR_1'], $rs['N_PLOMB_1'],$rs['TRANSITAIRE'], $rs['COMPAGNIE_MARITIME'], $rs['CHARGEUR']];
-            // } 
 
             if (!$handle = fopen(/*$path, 'w'*/$fichier,'w'))
                 exit;

@@ -1,4 +1,12 @@
 <?php
+/*
+    Date creation : 14-07-2022
+    Auteur : Cellule SOLAS - KENT
+    Version:1.0
+    Dernière modification : 04-10-2022
+    Dernier modificateur : Cellule SOLAS - KENT
+    Description: Mettre en lettre tous les montants 
+*/
     function int2str($a){
         $joakim = explode('.',$a);
         if (isset($joakim[1]) && $joakim[1]!='')
@@ -96,23 +104,5 @@
             else if ($a < 1000000000000) {
                 return int2str((int)($a / 1000000000)) . ' milliards ' . int2str($a % 1000000000);
             }
-            
-    /*vous constaterez que l'erreur se situé a ce niveau
-    au lieu de faire ceci*/
-    // else if ($a<1000){
-    // if($a%100!=0)return int2str((int)($a/100)).' '.int2str(100).' '.int2str($a%100);
-    // }
-    // //vous devez plutot mettre ça
-    // else if ($a<1000){
-    // if($a%100==0)
-    // return int2str((int)($a/100)).' '.int2str(100);
-    // if($a%100!=0)return int2str((int)($a/100)).' '.int2str(100).' '.int2str($a%100);
-    }
-    // /*parce qu"il y'a deux cas qui se présente
-    // le cas le modulo est zero*/
-    // if($a%100==0)
-    // return int2str((int)($a/100)).' '.int2str(100);
-    // //le cas ou il est different de zero
-    // if($a%100!=0)return int2str((int)($a/100)).' '.int2str(100).' '.int2str($a%100);
-    // }
+}
 ?>

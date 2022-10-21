@@ -5,65 +5,42 @@ include_once('../functions/Produit_function.php');
 include_once('../functions/Nom_chargeur_function.php');
 include_once('../functions/Table_value_function.php');
 include_once('../functions/Complete_function.php');
+include_once('../functions/Chargeur_facturation_function.php');
 
-
-//function getTicketsHtml($pont,$chrg,$debut,$fin,$cafe,$cajou,$autres){
 function getTicketsHtml($pont,$chrg,$debut,$fin,$type){
 
 
-		global $tarif,$bds,$bdf;
+		global $tarif,$bds,$bdf,$strc;
     
         $debut =  datesitetoserver($debut);
         $fin =  datesitetoserver($fin);
-		$annee=substr($debut,0,4);
-		$mois=substr($debut,5,2);
-		 
-//		$critere=Produit($cafe,$cajou,$autres);
+		// $annee=substr($fin,0,4);
+      $annee=$_GET['annee'];
+		$mois=$_GET['mois'];
+		$strc=$_GET['user_id'];
+		 $exclu=GetChargeurFac ($bdd);
+		$exclu=implode(",",$exclu[0]);
 		$critere=Produit($type);
 
 
-        $query = " SELECT T.DATE_RECEPT,CO.ORIGINAL,T.HEURE_RECEPT,T.CHARGEUR ,T.N_DOSSIER_BOOKING,T.N_CONTENEUR_1, ";
+       $query= " SELECT T.DATE_RECEPT,CO.ORIGINAL,T.HEURE_RECEPT,T.CHARGEUR ,T.N_DOSSIER_BOOKING,T.N_CONTENEUR_1, ";
         $query .= " T.N_PLOMB_1,T.TRANSITAIRE,T.COMPAGNIE_MARITIME,T.CHARGEUR, ";
         $query .= " T.METHODE_DE_PESEE_VGM,T.POIDS_VGM,T.PRODUIT,T.N_CONTRAT,T.chp57,T.DATE_EMIS ";
 		$query .= " FROM TICKET T,CORRESPONDANCE CO ";
-		// $query .= ((!empty($cafe)&&!empty($cajou)&&!empty($autres))?" ":" , CORRESPROD CP ");
 		$query .= " WHERE T.DISABLED = 0 AND T.ARCHIVE= 0 AND T.BANNED= 0 AND T.BLOCKED= 0 ";
 		$query .= " AND T.COMPAGNIE_MARITIME NOT IN('CCI') AND T.CHARGEUR = CO.DERIVE AND T.COMP_MAR_TRY>0 AND T.COMP_MAR_GONE>=1 ";
-		// $query .= ((!empty($cafe)&&!empty($cajou)&&!empty($autres))?" ":" AND T.PRODUIT = CP.DERIVE AND CP.ORIGINAL ".$critere);	
-		$query .= ((!empty($type))?" ":" AND T.PRODUIT IN(SELECT DERIVE FROM CORRESPROD WHERE ORIGINAL ".$critere.") ");	
-		//$query .= ((!empty($cafe)&&!empty($cajou)&&!empty($autres))?" ":" AND T.PRODUIT IN(SELECT DERIVE FROM CORRESPROD WHERE ORIGINAL ".$critere.") ");	
-		$query .=(!empty($debut)?" AND T.DATE_EMIS>='".$debut."' ":"");
-		$query .=(!empty($fin)?" AND T.DATE_EMIS<='".$fin."' ":"");
-		$query .=(!empty($pont)?" AND T.PONT='".$pont."' ":"");
+		$query .= "AND T.PRODUIT IN(SELECT DERIVE FROM CORRESPROD WHERE ORIGINAL ".$critere.") ";	
+		$query .=(!empty($debut)?" AND T.DATE_EMIS>='".$annee."/".$mois."/01/' ":"");
+		$query .=(!empty($fin)?" AND T.DATE_EMIS<='".$annee."/".$mois."/31' ":"");
+		$query .=(!empty($pont)?" AND T.PONT='".$pont."'":"");
+		$query .= " AND CO.ORIGINAL =".$chrg." ";
+		$query .= "GROUP BY T.N_CONTENEUR_1";
 		$query .=" ORDER BY T.N_CONTENEUR_1,T.DATE_RECEPT DESC,T.HEURE_RECEPT DESC";
-
 		$result = $bds -> query ($query);
 
-    //   $cli=$result->fetch();
-    //   $client= $cli['CHARGEUR'];
-     
-      //$date=new DateTime($cli['DATE_RECEPT']);
       
       setlocale(LC_TIME, 'fr_FR',"French");
-	  
-    //   $date1=$cli['DATE_RECEPT'];
-    //   $date=strftime("%B", strtotime($date1));
-    //   $anne=substr($cli['DATE_RECEPT'],0,4);
-
-      
-
-     
-   //  $dmd=GetChargeur($bds,0,$_POST['debut'],$_POST['fin'],$_POST['pont'],'','','',$_SESSION['ID']);
-	// $stat=getvalue($bds,$id,'IDENTIFIANT','demande','STATUT');
-
-   
-   //$result = substr($data['IDENTIFIANT'],0,5);
-
-   
-
-
-      //$query = $bds -> query("SELECT DATE_CREATION FROM demande WHERE IDENTIFIANT = ".$id);
-    
+	 
 
 
 ///////////////////////////////////////////////////////DEUXIEME PAGES ///////////////////////////////////////////////
@@ -94,16 +71,10 @@ $center=';margin: auto;';
              
             $i=0;
             $cnt="";
-			$donnees=$result->fetch();
-			// if($donnees == $result){
+			
              while ($donnees = $result->fetch()){
 				 
-				//  echo'la variable'. $cnt;
-				//  var_dump($donnees);
-				// var_dump('je suis dans la boucle');
-				// echo 'je suis dans la boucle';
                 if($cnt!=$donnees["N_CONTENEUR_1"]){
-					// var_dump('je suis dans la boucle');
 					
 					$cnt=$donnees["N_CONTENEUR_1"];
 					
@@ -129,21 +100,20 @@ $center=';margin: auto;';
 						$i++;
 					}
 
-					$date=strtoupper(strftime("%B", strtotime($donnees['DATE_RECEPT'])));
+					$date=$donnees['DATE_RECEPT'];
+					$date=substr($date,5,-3);
+					$moiss = array('Janvier','Fevrier', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Decembre');
 				 }
 
             }
-			//  var_dump($result);
-			//  var_dump($cnt);
-
-             //pour le nombre et le cout des tickets
+		
              $cout= $i*$tarif;
              
           
             $html1.='
                   <tr bgcolor="#87ceeb">
                      <td colspan="'.($chrg?'3':'4').'">TOTAL</td>
-                     <td align="center" colspan="3">MOIS DE '. $date.'</td>
+                     <td align="center" colspan="3">MOIS DE '.strtoupper($moiss[$date-1]).'</td>
                      <td align="center" colspan="2">'.$i.' TICKETS</td>
                      <td align="center" style="white-space: nowrap;" colspan="2">'.number_format($cout,0,""," ").' F</td>
                </tr>
@@ -173,9 +143,11 @@ $center=';margin: auto;';
 				</div>
 				<br>';
 setlocale(LC_ALL, 'fr_FR', 'fra_FRA');
+	$user=(($strc==$chrg)?getvalue($bds,'DERIVE','CORRESPONDANCE','ORIGINAL',$chrg):getvalue($bdf,'STRUCTURE','USER','IDENTIFIANT',$strc));
 
-		$account=getvalue($bdf,'ID_USER','PONT','ID_PONT',$pont);
-		$user=($account[0]?getvalue($bdf,'STRUCTURE','USER','IDENTIFIANT',$account[0]):getvalue($bds,'STRUCTURE','PONT','ID_PONT',$pont));
+		
+		$numfac=(($strc==$chrg)?getvalue($bdf,'NUM_FACTURE','FACTURE','ID_CHAR',$chrg):getvalue($bdf,'NUM_FACTURE','FACTURE','ID_USER',$strc));
+		$m=date('n');
 
 		$entete.='<br> 
          <table style="'.$center.'" width="95%">
@@ -183,14 +155,13 @@ setlocale(LC_ALL, 'fr_FR', 'fra_FRA');
             <td style="'.$border.'" border=1 bgcolor="#87ceeb"><p>Pour Le Client :</p></td>
             <td><p style="'.$titre1.'">'.$user[0].'</p></td>
             <td style="'.$border.'" border=1 bgcolor="#87ceeb"><p>Pour La Facture :</p></td>
-            <td><p style="'.$titre1.'">SOL'.$annee.$mois.Complete($pont,3)./*$cafe.$cajou.$autres.*/$type.'</p></td>
+            <td><p style="'.$titre1.'">'.$numfac[0].'</p></td>
             <td  style="'.$border.'" border=1 bgcolor="#87ceeb"><p>du :</p></td>
-            <td><p style="'.$titre1.'">'.strftime('%d %B %Y').'</p></td>
+            <td><p style="'.$titre1.'">01 '.strtoupper($moiss[$date-1]).' '. $annee.'</p></td>
           </tr>
 
          </table> <br>';
-
-			//  echo $entete.$html1;
-    // return $entete.$html1;
+    return $entete.$html1;
 }
+
 ?>

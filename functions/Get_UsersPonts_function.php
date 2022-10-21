@@ -55,5 +55,5 @@
 		
 		return array($id,$nom,$select);
 	}
-
+	
 ?>

@@ -1,4 +1,11 @@
 <?php
+/*
+    Date creation : 25-05-2021
+    Auteur : Cellule SOLAS - ABRS
+    Version:1.0
+    Dernière modification : 04-10-2022
+    Dernier modificateur : Cellule SOLAS - KENT
+*/
 date_default_timezone_set("Africa/Abidjan");
 $month = array("janvier","fevrier","mars","avril","mai","juin","juillet","aout","septembre","octobre","novembre","decembre");
 $verbose=1;//afficher le traitement de la generation automatique des factures dans le log
@@ -49,6 +56,9 @@ $bank='UBA COTE DIVOIRE';
 $compte='CI150 0100 101090011461';
 $tva="0";//Taux de la TVA
 $signature='facture_solas.png';
+$cmpt_colec=411230;//compte collectif
+$code_j='VEN';//code journal
+$numprod=706109;
 
 $query="SELECT * FROM PARAMETRE ";
 $res=$bdf->query($query);
@@ -104,6 +114,12 @@ while ($donnees = $res->fetch())
 		$signature=$donnees['VALEUR'];
 	elseif("cumul"==$donnees['NOM'])
 		$cumul=$donnees['VALEUR'];
+	elseif("cmpt_colec"==$donnees['NOM'])
+		$cmpt_colec=$donnees['VALEUR'];
+	elseif("code_j"==$donnees['NOM'])
+		$code_j=$donnees['VALEUR'];
+	elseif("'num_prod"==$donnees['NOM'])
+		$numprod=$donnees['VALEUR'];
 	}
 $res->closeCursor();	
 

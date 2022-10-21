@@ -48,7 +48,8 @@ function LoadUtilisateurs(){
                 var j = 2,
                     actif = '',
                     modif = '',
-                    reini = '';
+                    reini = '',
+					send = '';
 
                 for(var i = 0; i < response[1]; i++){
 
@@ -67,13 +68,14 @@ function LoadUtilisateurs(){
 					else
 						reini='';
 					
+						send='<button class="btn btn-outline-success button-users" name="'+response[j+1]+'_5_'+response[j+2]+'_'+response[j+5]+'" title="Envoyer" "><i class="mdi mdi-send"></i></button>';
 					$('.table-users').DataTable().row.add([
                         response[j+1],//IDENTIFIANT
 						'<center><label class="badge badge-'+statuscolor((response[j+2]==0)?3:5)+'" style="border-radius: 5px;height:20px;padding-top:3px;">'+Statut(response[j+2])+'</label></center>',//STATUT
 						response[j+4],//LOGIN
 						response[j+5],//STRUCTURE
 						response[j+6],//PONT
-                        '<span style="white-space:nowrap">'+actif+' '+modif+' '+reini+'</span>',
+                        '<span style="white-space:nowrap">'+actif+' '+modif+' '+reini+' '+send+'</span>',
 					]).columns.adjust().draw(false);
 					
 					j += response[2];
@@ -134,6 +136,28 @@ $('.table-users').on('click','.button-users', function(){
 	}else if(id[1]==1 || id[1]==2){
 		
 		LoadUser(id);
+	}
+	else if(id[1]==5){
+		// alert('voulez vous vraiment envoyer la facture par email ?')
+		showloader() ;
+
+	$.ajax({
+		   
+        url: './models/facturation.php',
+        type: 'POST',
+		data: '&id_strc='+id[0]+'&name_strc='+id[3],
+		dataType: 'json',
+        success : function(response){
+
+			hideloader()
+			mssg(lang,5,);
+
+		},error: function(jqXHR, status, error) {
+			hideloader();
+			mssg(lang,7,error);
+			
+		}
+	})//ajax
 	}
   
 });//ONCLICK

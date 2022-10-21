@@ -1,18 +1,34 @@
 <?php
-
+/*
+    Date creation : 14-07-2021
+    Auteur : Cellule SOLAS - KENT
+    Version:1.0
+    Dernière modification : 04-10-2022
+    Dernier modificateur : Cellule SOLAS - KENT
+    Description: Generation de la facture en pdf  
+*/
 // include('../functions/Users_get_facture_html.php');
 include('../functions/Users_get_facture_cafe_html.php');
+include('../functions/Users_get_chargeurs_Exclu_html.php');
 include('../functions/Users_get_chargeurs_html.php');
 include('../functions/PDF_File_function.php');
+include('../functions/Users_get_facture_chargeur_html.php');
 
 //mode : 'I'=dans le navigateur 'F'=dans le systeme de fichier
 
-//function PDF_Facture($pont,$debut,$fin,$cafe,$cajou,$autres,$mpdf,$mode,$user){
-function PDF_Facture($pont,$debut,$fin,$type,$mpdf,$mode,$user){
-	// $facture =  getFactureHtml($pont,$debut,$fin,$cafe,$cajou,$autres);
-	$facture =  getFactureHtml($user,$debut,$fin,$type,$pont);
-	//$chargeurs = getChargeursHtml($pont,$debut,$fin,$cafe,$cajou,$autres);
-	 $chargeurs = getChargeursHtml($pont,$debut,$fin,$type,$user);
+function PDF_Facture($debut,$fin,$type,$mpdf,$mode,$user,$char){
+	if($user){
+		$facture = getFactureUserHtml($user,$debut,$fin,$type,$pont,$numfac);
+		
+		$chargeurs = getChargeursHtml($pont,$debut,$fin,$type,$user,$numfac);
+	}
+		
+
+	else{
+		$facture= getFactureChargeurHtml($char,$debut,$fin,$type,$pont,$numfac);
+		 $chargeurs = getChargeursExcluHtml($pont,$debut,$fin,$type,$char,$numfac);
+	}
+		
 	$space= ' ';
 	$title = "FACTURE";
 
@@ -26,36 +42,32 @@ function PDF_Facture($pont,$debut,$fin,$type,$mpdf,$mode,$user){
 		$mois=substr($debut,5,2);
 
 		
-		// $path=PDFfile('PATH',$repfact,$annee,$mois,$pont,'',$cafe,$cajou,$autres);
-		$path=PDFfile('PATH',$repfact,$annee,$mois,$pont,'',$type);
+		
+		$path=PDFfile('PATH',$repfact,$annee,$mois,$user,$char,$type);
 
 		
-		if(@ mkdir($path, 0777, true))
-			// $path.=PDFfile('FILE',$repfact,$annee,$mois,$pont,'',$cafe,$cajou,$autres);
-			$path.=PDFfile('FILE',$repfact,$annee,$mois,$pont,'',$type);
-
+		if(@ mkdir($path, 0777, true)) 
+		
+			$path.=PDFfile('FILE',$repfact,$annee,$mois,$user,$char,$type);
+			
 		else
 			$path="";
+	 }
+		
 					
-	}
+	
 
-	if($path=="")
+	 if($path=="")
 			return false;
-	else
-	if($mpdf==6){
+	elseif($mpdf==6){
 
 		$pdf = new mPDF();
-		//$pdf2 = new mPDF("A4-L");
 		ini_set("pcre.backtrack_limit", "1000000");
-		// $facture=preg_replace($facture);
 
 		$pdf->SetDisplayMode('fullpage');
-		//$pdf->SetHeader(' | ' . $title . ' |{PAGENO}');
 		$pdf->SetFooter('AVENUE JOSEPH ANOMA &bull; 01 B.P. 1399 ABIDJAN 01 &bull; TEL lignes group&eacute;es : (225) 20.33.16.00 &bull; FAX : (225) 20.32.39.42 &bull; www.cci.ci');
 		$pdf->WriteHTML(utf8_encode($facture));
 		$pdf->WriteHTML(utf8_encode($chargeurs));
-		//$pdf->AddPage($ticket,'L');
-		//$pdf->SetAutoPageBreak($ticket);
 		setlocale(LC_TIME, 'fr_FR',"French");
 		$pdf->SetFooter(''.strftime('%A %d %B %Y').'|'.strftime('%H:%M:%S').'|  Page{PAGENO}/{PAGENO} | ' );
 

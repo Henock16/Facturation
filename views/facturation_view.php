@@ -7,6 +7,7 @@
   include('modal/Message_modal.php');
   include('modal/User_modal.php');
   include('modal/Mail_modal.php');
+  include('modal/Exclu_modal.php');
 include_once('views/modal/New_password_modal.php') ;
 ?>
               

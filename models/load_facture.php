@@ -20,34 +20,38 @@ $fin=(isset($_GET['fin'])?$_GET['fin']:'');
 $cafe=(isset($_GET['cafe'])?$_GET['cafe']:'');
 //$cajou=(isset($_GET['cajou'])?$_GET['cajou']:'');
 $autres=(isset($_GET['autres'])?$_GET['autres']:'');
+$char=(isset($_GET['char'])?$_GET['char']:'');
+$mois=$_GET['mois'];
+$annee=$_GET['annee'];
 
 if($cafe==0 && $autres==1)
 	$type='2';
 else if($cafe==1 && $autres==0)
 	$type='1';
-else if($cafe==1 && $autres==1)
-	$type='1,2';
+// else if($cafe==1 && $autres==1)
+// 	$type='1,2';
 // $user='compta';
 
 $debut=datesitetoserver($debut);
 $fin=datesitetoserver($fin);
-$annee=substr($debut,0,4);
-$mois=substr($debut,5,2);
-$path=PDFfile('PATH',$repfact,$annee,$mois,$pont,'',$cafe,/*$cajou*/'',$autres);
-$file=PDFfile('FILE',$repfact,$annee,$mois,$pont,'',$cafe,/*$cajou*/'',$autres);
-		
-//*
+// $annee=substr($debut,0,4);
+// $mois=substr($debut,5,2);
+if($char==0)
+{
+	$path=PDFfile('PATH',$repfact,$annee,$mois,$user,'',$type);
+	$file=PDFfile('FILE',$repfact,$annee,$mois,$user,'',$type);
+}
+else 
+{
+	$path=PDFfile('PATH',$repfact,$annee,$mois,'',$user,$type);
+	$file=PDFfile('FILE',$repfact,$annee,$mois,'',$user,$type);
+}
+
 if(file_exists($path.$file))
 	header ("Location: ".$path.$file);
+// PDF_Facture($pont,$debut,$fin,$type,$mpdf,'I',$user);
 else
-	// PDF_Facture($pont,$debut,$fin,$cafe,/*$cajou*/$type,$autres,$mpdf,'I',$user);
 	PDF_Facture($pont,$debut,$fin,$type,$mpdf,'I',$user);
-//*/
-/*
-if(!file_exists($path.$file))
-@	PDF_Facture($pont,$debut,$fin,$cafe,$cajou,$autres,$mpdf,'F',$user);
-
-header ("Location: ".$path.$file);
-//*/
-echo json_encode($type.'user '.$user.' autre'.$autres.' cafe'.$cafe);
+// header ("Location: ".$path.$file);
+echo json_encode($type.'user '.$user.' autre'.$autres.' cafe'.$cafe.'char'.$char);
 ?>

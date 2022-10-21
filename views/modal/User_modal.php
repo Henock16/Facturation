@@ -35,7 +35,7 @@
                                 <div class="form-group row" style="margin-top:0px;margin-bottom:0px;">
                                     <label class="col-sm-4" style="padding-top:0px;height:30px;text-align:left" >Numéro C. C.</label>
 									<div class="input-group col-sm-8"  style="float:right">
-										<input type="text" name="numcc" class="form-control user-details" style="height:30px"  maxlength="8" onkeyup='this.value=this.value.toUpperCase()'>
+										<input type="text" name="numcc" class="form-control user-details" style="height:30px"  maxlength="9" onkeyup='this.value=this.value.toUpperCase()'>
 									</div>
                                 </div>
                                 <div class="form-group row" style="margin-top:0px;margin-bottom:0px;">
